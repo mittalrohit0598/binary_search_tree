@@ -29,6 +29,19 @@ class Tree
     root
   end
 
+  def insert(value, root = self.root)
+    if root.nil?
+      return Node.new(value)
+    elsif value < root.data
+      root.left_child = insert(value, root.left_child)
+    elsif value > root.data
+      root.right_child = insert(value, root.right_child)
+    elsif value == root.data
+      return
+    end
+    root
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -38,4 +51,6 @@ end
 
 array = Array.new(15) { rand(100) }.uniq.sort
 tree = Tree.new(array)
+tree.pretty_print
+15.times { tree.insert(rand(100)) }
 tree.pretty_print
