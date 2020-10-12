@@ -30,16 +30,53 @@ class Tree
   end
 
   def insert(value, root = self.root)
-    if root.nil?
-      return Node.new(value)
-    elsif value < root.data
+    return Node.new(value) if root.nil?
+
+    if value < root.data
       root.left_child = insert(value, root.left_child)
     elsif value > root.data
       root.right_child = insert(value, root.right_child)
     elsif value == root.data
       return
     end
+
     root
+  end
+
+  def inorder_successor(root)
+    root = root.left_child until root.left_child.nil?
+
+    root
+  end
+
+  def delete(value, root = self.root)
+    return root if root.nil?
+
+    if value < root.data
+      root.left_child = delete(value, root.left_child)
+    elsif value > root.data
+      root.right_child = delete(value, root.right_child)
+    else
+      return root.right_child if root.left_child.nil?
+      return root.left_child if root.right_child.nil?
+
+      temp = inorder_successor(root.right_child)
+      root.data = temp.data
+      root.right_child = delete(temp.data, root.right_child)
+    end
+    root
+  end
+
+  def find(value, root = self.root)
+    return nil if root.nil?
+
+    if value < root.data
+      find(value, root.left_child)
+    elsif value > root.data
+      find(value, root.right_child)
+    else
+      root
+    end
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -54,3 +91,16 @@ tree = Tree.new(array)
 tree.pretty_print
 15.times { tree.insert(rand(100)) }
 tree.pretty_print
+15.times do
+  data = rand(100)
+  puts "Delete #{data}"
+  tree.delete(data)
+end
+tree.pretty_print
+15.times do
+  data = rand(100)
+  puts "Find #{data}"
+  node = tree.find(data)
+  puts 'Not found' if node.nil?
+  puts node.data unless node.nil?
+end
