@@ -94,6 +94,18 @@ class Tree
     array
   end
 
+  def level_order_recursion(queue = [root], array = [])
+    unless queue.first.nil?
+      array << queue.first.data
+      queue << queue.first.left_child << queue.first.right_child
+    end
+    queue.shift
+
+    array = level_order_recursion(queue, array) unless queue.empty?
+
+    array
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -107,3 +119,4 @@ tree.pretty_print
 15.times { tree.insert(rand(100)) }
 tree.pretty_print
 p tree.level_order_iteration
+p tree.level_order_recursion
