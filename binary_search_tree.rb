@@ -106,6 +106,36 @@ class Tree
     array
   end
 
+  def inorder(root = self.root, array = [])
+    return array if root.nil?
+
+    inorder(root.left_child, array)
+    array << root.data
+    inorder(root.right_child, array)
+
+    array
+  end
+
+  def preorder(root = self.root, array = [])
+    return array if root.nil?
+
+    array << root.data
+    preorder(root.left_child, array)
+    preorder(root.right_child, array)
+
+    array
+  end
+
+  def postorder(root = self.root, array = [])
+    return array if root.nil?
+
+    postorder(root.left_child, array)
+    postorder(root.right_child, array)
+    array << root.data
+
+    array
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -118,5 +148,3 @@ tree = Tree.new(array)
 tree.pretty_print
 15.times { tree.insert(rand(100)) }
 tree.pretty_print
-p tree.level_order_iteration
-p tree.level_order_recursion
