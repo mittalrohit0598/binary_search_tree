@@ -79,6 +79,21 @@ class Tree
     end
   end
 
+  def level_order_iteration
+    queue = [root]
+    array = []
+    until queue.empty?
+      if queue.first.nil?
+        queue.shift
+        next
+      end
+      array << queue.first.data
+      queue << queue.first.left_child << queue.first.right_child
+      queue.shift
+    end
+    array
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -91,16 +106,4 @@ tree = Tree.new(array)
 tree.pretty_print
 15.times { tree.insert(rand(100)) }
 tree.pretty_print
-15.times do
-  data = rand(100)
-  puts "Delete #{data}"
-  tree.delete(data)
-end
-tree.pretty_print
-15.times do
-  data = rand(100)
-  puts "Find #{data}"
-  node = tree.find(data)
-  puts 'Not found' if node.nil?
-  puts node.data unless node.nil?
-end
+p tree.level_order_iteration
