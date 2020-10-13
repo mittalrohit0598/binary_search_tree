@@ -106,41 +106,41 @@ class Tree
     array
   end
 
-  def inorder(root = self.root, array = [])
-    return array if root.nil?
+  def inorder(node = root, array = [])
+    return array if node.nil?
 
-    inorder(root.left_child, array)
-    array << root.data
-    inorder(root.right_child, array)
-
-    array
-  end
-
-  def preorder(root = self.root, array = [])
-    return array if root.nil?
-
-    array << root.data
-    preorder(root.left_child, array)
-    preorder(root.right_child, array)
+    inorder(node.left_child, array)
+    array << node.data
+    inorder(node.right_child, array)
 
     array
   end
 
-  def postorder(root = self.root, array = [])
-    return array if root.nil?
+  def preorder(node = root, array = [])
+    return array if node.nil?
 
-    postorder(root.left_child, array)
-    postorder(root.right_child, array)
-    array << root.data
+    array << node.data
+    preorder(node.left_child, array)
+    preorder(node.right_child, array)
 
     array
   end
 
-  def height(root = self.root)
-    return -1 if root.nil?
+  def postorder(node = root, array = [])
+    return array if node.nil?
 
-    left_height = height(root.left_child)
-    right_height = height(root.right_child)
+    postorder(node.left_child, array)
+    postorder(node.right_child, array)
+    array << node.data
+
+    array
+  end
+
+  def height(node = root)
+    return -1 if node.nil?
+
+    left_height = height(node.left_child)
+    right_height = height(node.right_child)
 
     return left_height + 1 if left_height > right_height
 
