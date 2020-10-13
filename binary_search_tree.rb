@@ -37,7 +37,7 @@ class Tree
     elsif value > root.data
       root.right_child = insert(value, root.right_child)
     elsif value == root.data
-      return
+      return root
     end
 
     root
@@ -136,6 +136,17 @@ class Tree
     array
   end
 
+  def height(root = self.root)
+    return 0 if root.nil?
+
+    left_height = height(root.left_child)
+    right_height = height(root.right_child)
+
+    return left_height + 1 if left_height > right_height
+
+    right_height + 1
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -148,3 +159,4 @@ tree = Tree.new(array)
 tree.pretty_print
 15.times { tree.insert(rand(100)) }
 tree.pretty_print
+puts tree.height
