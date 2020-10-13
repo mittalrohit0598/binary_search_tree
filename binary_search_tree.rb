@@ -173,6 +173,11 @@ class Tree
     true
   end
 
+  def rebalance
+    tree = level_order_recursion
+    self.root = build_tree(tree.sort)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -185,5 +190,8 @@ tree = Tree.new(array)
 tree.pretty_print
 p tree.balanced?
 15.times { tree.insert(rand(100)) }
+tree.pretty_print
+p tree.balanced?
+tree.rebalance
 tree.pretty_print
 p tree.balanced?
