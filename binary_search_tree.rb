@@ -137,7 +137,7 @@ class Tree
   end
 
   def height(root = self.root)
-    return 0 if root.nil?
+    return -1 if root.nil?
 
     left_height = height(root.left_child)
     right_height = height(root.right_child)
