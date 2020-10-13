@@ -161,6 +161,18 @@ class Tree
     depth + 1
   end
 
+  def balanced?(node = root)
+    return true if node.nil?
+    return false if (height(node.left_child) - height(node.right_child)).abs > 1
+
+    left_balanced = balanced?(node.left_child)
+    right_balanced = balanced?(node.right_child)
+
+    return false if left_balanced == false || right_balanced == false
+
+    true
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -171,5 +183,7 @@ end
 array = Array.new(15) { rand(100) }.uniq.sort
 tree = Tree.new(array)
 tree.pretty_print
+p tree.balanced?
 15.times { tree.insert(rand(100)) }
 tree.pretty_print
+p tree.balanced?
