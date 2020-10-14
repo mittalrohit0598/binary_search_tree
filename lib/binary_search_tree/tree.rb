@@ -1,15 +1,5 @@
 # frozen_string_literal: true
 
-# class Node
-class Node
-  attr_accessor :data, :left_child, :right_child
-  def initialize(data)
-    @data = data
-    @left_child = nil
-    @right_child = nil
-  end
-end
-
 # class Tree
 class Tree
   attr_accessor :root
@@ -184,19 +174,3 @@ class Tree
     pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_child
   end
 end
-
-array = Array.new(15) { rand(100) }.uniq.sort
-tree = Tree.new(array)
-puts tree.balanced?
-p tree.level_order_recursion
-p tree.preorder
-p tree.postorder
-p tree.inorder
-15.times { tree.insert(rand(200)) }
-puts tree.balanced?
-tree.rebalance
-puts tree.balanced?
-p tree.level_order_recursion
-p tree.preorder
-p tree.postorder
-p tree.inorder
